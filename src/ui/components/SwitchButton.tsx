@@ -1,6 +1,6 @@
 import React from 'react';
-import Switch, { SwitchProps } from '@material-ui/core/Switch';
 import styled from 'styled-components';
+import { Switch, SwitchProps } from '@mui/material';
 
 const SwitchButton: React.FC<SwitchProps> = (props) => {
   return (

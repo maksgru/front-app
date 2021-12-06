@@ -1,56 +1,37 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { Formik } from 'formik';
-import {
-  object as yupObject,
-  string as yupString
-} from 'yup';
-
-import Spinner from 'ui/components/Spinner';
-import { useStoreDispatch, useStoreSelector } from 'store/hooks';
-import { selectProfile, signIn } from 'store/reducers/profile';
-import { useHistory } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
-import { SigninDataType } from 'api/auth';
+import { SignupDataType } from 'api/auth';
+import { Form, Formik } from 'formik';
+import React from 'react';
+import { useStoreDispatch } from 'store/hooks';
+import { signUp } from 'store/reducers/profile';
+import styled from 'styled-components';
+import { object as yupObject, string as yupString } from 'yup';
 
-const initialValues: SigninDataType = {
+const initialValues: SignupDataType = {
   email: '',
-  password: ''
+  password: '',
+  firstName: '',
+  lastName: '',
 };
-
 const validation = yupObject().shape({
   email: yupString().required('Enter you email'),
   password: yupString().required('Enter your password')
 });
 
-const Auth: React.FC = () => {
-  const profile = useStoreSelector(selectProfile);
-  const history = useHistory();
+const SignupPage: React.FC = () => {
   const dispatch = useStoreDispatch();
-
   const submitForm = async (values: typeof initialValues) => {
-    await dispatch(signIn(values));
+    await dispatch(signUp(values));
   };
-
-  useEffect(() => {
-    if (profile) {
-      history.push('/');
-    }
-  }, [profile]);
-
   return (
-    <StyledAuth>
-      <div className="logo">
-        <Spinner />
-      </div>
-      <h2 className="auth-title">Welcome back!</h2>
+    <StyledSignup>
       <Formik
         initialValues={initialValues}
         validationSchema={validation}
         onSubmit={submitForm}
       >
         {({ values, handleSubmit, handleChange, errors, touched }) => (
-          <form id="login-form" onSubmit={handleSubmit}>
+          <Form id="login-form" onSubmit={handleSubmit}>
             <TextField
               id="email"
               name="email"
@@ -77,6 +58,19 @@ const Auth: React.FC = () => {
               label="password"
               placeholder="Enter your password"
             />
+            <TextField
+              id="password-confirm"
+              name="password confirm"
+              type="password"
+              fullWidth
+              classes={{ root: 'auth-input' }}
+              value={values.password}
+              onChange={handleChange}
+              error={Boolean(touched.password && errors.password)}
+              variant="outlined"
+              label="password confirm"
+              placeholder="Enter your password again"
+            />
             <div className="auth-footer">
               <Button
                 form="login-form"
@@ -89,37 +83,14 @@ const Auth: React.FC = () => {
                 Login
               </Button>
             </div>
-          </form>
+          </Form>
         )}
       </Formik>
-    </StyledAuth>
+    </StyledSignup>
   );
 };
 
-const StyledAuth = styled.div`    
-  margin: 0 auto;
-  max-width: 400px;
-  .auth-input {
-    margin: 20px 0;
-    z-index: 0;
-  }
-  .auth-title {
-    text-align: center;
-    font-family: 'Spectral', serif;
-  }
-  .auth-footer {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-  .sign-in-btn {
-   margin-top: 40px;
-   cursor: pointer;
-  }
-  .logo {
-    display: flex;
-    justify-content: center;
-  }
+const StyledSignup = styled.div`
 `;
 
-export default Auth;
+export default SignupPage;

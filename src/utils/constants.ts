@@ -1,0 +1,11 @@
+export const DEVICE_HASH_KEY = 'do.eIghtT439_krRvbfpoPByfytDlljhDufDR676f8';
+export const ACCESS_TOKEN_KEY = 'koj7Uhbyt6tgyiUYGuyg_moo-s-kml&IHikjn';
+export const REFRESH_TOKEN_KEY = 'DWED6tgWEssdcoo-s-kml&IHcsdiscSckjn';
+export const THEME_KEY = 'ci8EvsRWF%gR^rbgfgbSerfUiOk$';
+export const THEME_LIGHT = 'Tp6&$hbkLSu03kNeMcoNbuHce7LodU^veSpNM7%d.kpD9&kedL';
+export const THEME_DARK = 'Tp6&$hbkLSu03kNeMcoNbuHce7LodU^veSpNM7%d,kpD9&kedL';
+export const MESSENGER_STATUS_KEY = 'dDewf4F$Fqvaat4GgjqjQ7uJavtr';
+export const MESSENGER_OPEN = 'r4de_eder|de.$viOzX[(0jojDp<Cje;aq7nwiPS5vklCpDpPns[xbCY.jh87BVspwd';
+export const MESSENGER_CLOSE = 'r4de_eder|de.$viOzX[(0jojDp<Cje;aq7nwiPS5vklCpDpPns[xbCY,jh87BVspwd';
+export const USER_ID_KEY = 'm89U7gG8bUGcff66gjOkhksps$rfYvb';
+export const SOCKET_ID_KEY = 'l3ni&ii$fu67I5ddwNof8gfidwOfrD';

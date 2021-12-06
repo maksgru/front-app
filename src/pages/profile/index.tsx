@@ -11,7 +11,6 @@ const Profile: React.FC = () => {
 };
 
 const StyledProfile = styled.div`
-  margin-top: 120px;
 `;
 
 export default Profile;

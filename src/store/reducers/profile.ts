@@ -1,19 +1,22 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  AuthDataType,
+  SigninDataType,
   AuthResponseType,
   getProfileFetch,
+  GoogleAuthDataType,
+  googleSignInFetch,
   signInFetch,
-  UserPesponseType,
+  UserResponseType,
   UserType
 } from 'api/auth';
 
 import { storage } from 'utils';
 import { RootState } from '..';
 
+type ProfileStateStatus = 'success' | 'loading' | 'failed';
 export interface ProfileState {
   data: UserType | null;
-  status: 'success' | 'loading' | 'failed';
+  status: ProfileStateStatus;
 }
 
 const initialState: ProfileState = {
@@ -29,14 +32,42 @@ export const getProfile = createAsyncThunk(
   }
 );
 
-export const signIn = createAsyncThunk(
-  'auth/signIn',
-  async (data: AuthDataType) => {
+export const signUp = createAsyncThunk(
+  'auth/signUn',
+  async (data: SigninDataType) => {
     const response = await signInFetch(data);
     if (response.accessToken) {
       storage.setAccessToken(response.accessToken);
       storage.setRefreshToken(response.refreshToken);
     }
+    return response;
+  }
+);
+
+export const signIn = createAsyncThunk(
+  'auth/signIn',
+  async (data: SigninDataType) => {
+    const response = await signInFetch(data);
+    if (response.accessToken) {
+      storage.setAccessToken(response.accessToken);
+      storage.setRefreshToken(response.refreshToken);
+    }
+    const userId = response.user.id;
+    storage.setUserId(userId);
+    return response;
+  }
+);
+
+export const googleSignIn = createAsyncThunk(
+  'auth/googleSignIn',
+  async (data: GoogleAuthDataType) => {
+    const response = await googleSignInFetch(data);
+    if (response.accessToken) {
+      storage.setAccessToken(response.accessToken);
+      storage.setRefreshToken(response.refreshToken);
+    }
+    const userId = response.user.id;
+    storage.setUserId(userId);
     return response;
   }
 );
@@ -47,7 +78,7 @@ export const profileSlice = createSlice({
   reducers: {
     logOut: (state) => {
       state.data = null;
-      storage.dropStorage();
+      storage.dropUserData();
     }
   },
   extraReducers: (builder) => {
@@ -55,7 +86,7 @@ export const profileSlice = createSlice({
       .addCase(getProfile.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(getProfile.fulfilled, (state, action: PayloadAction<UserPesponseType>) => {
+      .addCase(getProfile.fulfilled, (state, action: PayloadAction<UserResponseType>) => {
         state.status = 'success';
         state.data = action.payload.user;
       })
@@ -71,13 +102,17 @@ export const profileSlice = createSlice({
       })
       .addCase(signIn.rejected, (state) => {
         state.status = 'failed';
+      })
+      .addCase(googleSignIn.fulfilled, (state, action: PayloadAction<AuthResponseType>) => {
+        state.status = 'success';
+        state.data = action.payload.user;
       });
   }
 });
 
-export const selectProfile = (state: RootState) => state.profile.data;
+export const selectProfile = (state: RootState): UserType | null => state.profile.data;
 
 export const { logOut } = profileSlice.actions;
-export const selectStatus = (state: RootState) => state.profile.status;
+export const selectStatus = (state: RootState): ProfileStateStatus => state.profile.status;
 
 export default profileSlice.reducer;

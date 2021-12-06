@@ -7,15 +7,25 @@ export type ErrorType = {
 };
 
 const axiosInstance = axios.create({
-  baseURL: config.serverUrl,
+  baseURL: `${config.serverUrl}/api`,
   withCredentials: true
 });
 
 axiosInstance.interceptors.request.use((request) => {
   const accessToken = storage.getAccessToken();
+  const deviceHash = storage.getDeviceHash();
+  const userId = storage.getUserId();
+  const soketId = storage.getSocketId();
   if (!request.headers) { request.headers = {}; }
   if (accessToken) {
     request.headers.Authorization = `Bearer ${accessToken}`;
+  }
+  request.headers.Devicehash = deviceHash;
+  if (userId && !accessToken) {
+    request.headers.userid = userId;
+  }
+  if (soketId) {
+    request.headers.soketId = soketId;
   }
   return request;
 });

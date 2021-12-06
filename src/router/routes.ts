@@ -1,22 +1,42 @@
 import Home from 'pages/home';
 import Page404 from 'ui/components/Page404';
 import Profile from 'pages/profile';
+import React from 'react';
+import Project from 'pages/project';
 
-const routes = [
+export type UserRoles = 'any' |'user' | 'client' | 'admin';
+
+export interface RouteType {
+  path: string;
+  exact: boolean;
+  component: React.FunctionComponent | React.ComponentClass;
+  role: UserRoles | UserRoles[];
+}
+
+const routes: RouteType[] = [
   {
     path: '/',
     exact: true,
-    Component: Home
+    component: Home,
+    role: 'user'
   },
   {
     path: '/profile',
     exact: true,
-    Component: Profile
+    component: Profile,
+    role: 'user'
+  },
+  {
+    path: '/project',
+    exact: true,
+    component: Project,
+    role: 'user'
   },
   {
     path: '/',
     exact: false,
-    Component: Page404
+    component: Page404,
+    role: 'user'
   }
 ];
 

@@ -3,9 +3,9 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
   app.use(
-    '/public',
+    '/upload',
     createProxyMiddleware({
-      target: 'http://localhost:6700',
+      target: 'http://localhost:4300',
       changeOrigin: true,
     })
   );

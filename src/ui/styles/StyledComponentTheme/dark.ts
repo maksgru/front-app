@@ -1,19 +1,22 @@
 const darkTheme = {
   colors: {
     main: '#131313',
-    body: '#1b1b1b',
-    inputBackground: 'rgba(165, 169, 188, 0.1)',
+    body: '#141414',
+    inputBackground: '#0e0e0e4f',
     activeIcon: '#FFFFFF',
     textTitle: '#cccccc',
     textSecondary: '#6E798C',
-    moonBackground: '#edeef4'
+    moonBackground: '#edeef4',
+    switchTrack: '#000000',
+    header: '#2d2e34',
+    messengerHeader: '#3e5164'
   },
   gradient: {
     header: 'linear-gradient(180deg, rgba(27, 27, 27,1) 60%, rgba(27,27,27,0) 100%)',
     footer: 'linear-gradient(0deg, rgba(27, 27, 27,1) 50%, rgba(27,27,27,0) 100%)'
   },
   shadow: {
-    cardShadow: '0px 0px 3px rgba(255, 255, 255, 0.5)'
+    cardShadow: '0px 0px 5px rgb(92 94 97 / 82%)'
   },
   breakpoints: {
     xs: '372px',

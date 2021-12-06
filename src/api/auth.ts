@@ -10,18 +10,34 @@ export interface UserType {
   role: string;
 }
 
-export interface UserPesponseType {
+export interface UserResponseType {
   user: UserType
 }
-export interface AuthDataType {
+export interface SigninDataType {
   email: string;
-  password: string;
+  password?: string;
 }
 
-export interface AuthResponseType extends UserPesponseType {
+export interface SignupDataType extends SigninDataType {
+  firstName?: string;
+  lastName?: string;
+}
+
+export interface AuthResponseType extends UserResponseType {
   accessToken: string;
   refreshToken: string;
 }
-export const signInFetch = (data: AuthDataType): Promise<AuthResponseType> => axios.post('/auth/sign-in', data);
 
-export const getProfileFetch = (): Promise<UserPesponseType> => axios.get('/auth/me');
+export interface GoogleAuthDataType {
+  googleId: number;
+  avatar: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+export const signInFetch = (data: SigninDataType): Promise<AuthResponseType> => axios.post('/auth/sign-in', data);
+export const signUpFetch = (data: SignupDataType): Promise<AuthResponseType> => axios.post('/auth/sign-up', data);
+export const googleSignInFetch = (data: GoogleAuthDataType): Promise<AuthResponseType> => axios.post('/auth/google-sign-in', data);
+
+export const getProfileFetch = (): Promise<UserResponseType> => axios.get('/auth');

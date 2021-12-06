@@ -5,7 +5,9 @@ import Router from 'router';
 import { useStoreDispatch, useStoreSelector } from 'store/hooks';
 import { getProfile, selectProfile, selectStatus } from 'store/reducers/profile';
 import Toast from 'ui/components/Toast';
-import { toggleNavbar } from 'store/reducers/app';
+import StaticFooter from 'ui/components/StaticFooter';
+import styled from 'styled-components';
+import Messendger from 'ui/components/Messenger';
 
 const App: React.FC = () => {
   const [isLoading, setLoading] = useState(true);
@@ -16,9 +18,7 @@ const App: React.FC = () => {
   useEffect(() => {
     if (profile) {
       setLoading(false);
-      dispatch(toggleNavbar(true));
     } else {
-      dispatch(toggleNavbar(false));
       dispatch(getProfile());
       setLoading(true);
     }
@@ -28,12 +28,17 @@ const App: React.FC = () => {
     return <GlobalSpinner />;
   }
   return (
-    <>
+    <StyledApp>
       <Header />
       <Router />
+      <StaticFooter />
+      <Messendger />
       <Toast />
-    </>
+    </StyledApp>
   );
 };
+
+const StyledApp = styled.div`
+`;
 
 export default App;

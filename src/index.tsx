@@ -8,6 +8,8 @@ import GlobalStyles from 'ui/styles/globalStyles';
 import { store } from 'store';
 import App from 'App';
 import * as serviceWorkerRegistration from 'serviceWorkerRegistration';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 ReactDOM.render(
   <Provider store={store}>
